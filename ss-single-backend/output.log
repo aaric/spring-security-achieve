@@ -1,0 +1,4 @@
+2021-07-30 11:38:05.452  INFO 19344 --- [main] com.example.ss.App                       : Starting App on DESKTOP-OUIJ8UQ with PID 19344 (D:\Workspaces\idea\spring-security-achieve\ss-single-backend\build\classes\java\main started by hanqi in D:\Workspaces\idea\spring-security-achieve\ss-single-backend)
+2021-07-30 11:38:05.454 DEBUG 19344 --- [main] com.example.ss.App                       : Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+2021-07-30 11:38:05.454  INFO 19344 --- [main] com.example.ss.App                       : The following profiles are active: dev
+2021-07-30 11:38:07.051  INFO 19344 --- [main] com.example.ss.App                       : Started App in 1.977 seconds (JVM running for 2.492)

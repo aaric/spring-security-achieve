@@ -4,6 +4,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "hello-sample"
+rootProject.name = "spring-security-achieve"
 
-include "ss-single"
+include "ss-single-backend"
