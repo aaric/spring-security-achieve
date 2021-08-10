@@ -21,7 +21,7 @@ management:
       application: ${spring.application.name}
   health:
     elasticsearch:
-      response-timeout: 3s
+      enabled: false
 
 # Logging settings
 logging:
