@@ -1,5 +1,9 @@
 # Release Notes
 
-## 0.13.0-SNAPSHOT
+## 0.2.0-SNAPSHOT
 
-- spring integration mqtt test.
+- 集成spring security 框架；
+
+## 0.1.0-SNAPSHOT
+
+- 初始化项目配置；
