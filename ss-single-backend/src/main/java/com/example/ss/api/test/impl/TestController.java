@@ -3,7 +3,6 @@ package com.example.ss.api.test.impl;
 import com.example.ss.api.test.TestApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,23 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/test/test")
 public class TestController implements TestApi {
 
     @Override
     @GetMapping("/ok")
     public String ok() {
-        return "r1";
+        return "ok";
     }
 
     @Override
-    @GetMapping("/r1")
+    @GetMapping("/r/r1")
     public String r1() {
         return "r1";
     }
 
     @Override
-    @GetMapping("/r2")
+    @GetMapping("/r/r2")
     public String r2() {
         return "r2";
     }

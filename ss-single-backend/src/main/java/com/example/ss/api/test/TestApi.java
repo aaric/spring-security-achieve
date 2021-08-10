@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "测试模块API")
 public interface TestApi {
 
-    @ApiOperation("Ok")
+    @ApiOperation("OK")
     String ok();
 
     @ApiOperation("R1")
