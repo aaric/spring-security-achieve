@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
+                // SpringMVC不支持POST请求直接返回页面，successForwardUrl会报“405 Method Not Allowed”
                 .defaultSuccessUrl("/ok", true)
                 .and()
                 .csrf().disable();

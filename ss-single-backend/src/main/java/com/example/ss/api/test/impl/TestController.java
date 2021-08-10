@@ -2,6 +2,7 @@ package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.TestApi;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,8 @@ public class TestController implements TestApi {
     @Override
     @GetMapping("/ok")
     public String ok() {
-        return "ok";
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return "ok ->" + username;
     }
 
     @Override
