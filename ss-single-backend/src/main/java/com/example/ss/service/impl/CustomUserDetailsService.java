@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("origin username: {}", username);
         UserDetails userDetails = User.withUsername("admin")
-                .password("admin")
+                .password("$2a$10$GFxO0rEP3QUq/Tb92Re3P.60bjzo/XDmStAMvZuXJOsKghapaIuvS")
                 .authorities("a1")
                 .build();
         return userDetails;
