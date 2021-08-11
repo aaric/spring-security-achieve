@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 自定义用户详情Service接口实现
  *
  * @author Aaric, created on 2021-08-11T15:23.
- * @version 0.1.0-SNAPSHOT
+ * @version 0.3.0-SNAPSHOT
  */
 @Slf4j
 @Service
