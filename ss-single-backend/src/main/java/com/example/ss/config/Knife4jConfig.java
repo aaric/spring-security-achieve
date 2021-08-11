@@ -53,7 +53,7 @@ public class Knife4jConfig implements InitializingBean {
                 .description("Spring Security 框架集成测试")
                 .termsOfServiceUrl(MessageFormat.format("http://{0}:{1}/doc.html", serverHost, serverPort))
                 .contact(new Contact("Aaric", "", "vipaaric@gmail.com"))
-                .version("0.13.0")
+                .version("0.3.0")
                 .build();
     }
 
