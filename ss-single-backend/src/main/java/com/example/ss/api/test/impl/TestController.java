@@ -20,7 +20,8 @@ public class TestController implements TestApi {
     @GetMapping("/ok")
     public String ok() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return "ok ->" + username;
+        log.info("username: {}", username);
+        return "ok -> " + username;
     }
 
     @Override
