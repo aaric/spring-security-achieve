@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
  * BCryptTests
  *
  * @author Aaric, created on 2021-08-11T15:45.
- * @version 0.1.0-SNAPSHOT
+ * @version 0.3.0-SNAPSHOT
  */
 @Slf4j
 public class BCryptTests {

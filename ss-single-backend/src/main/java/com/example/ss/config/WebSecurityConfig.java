@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * Spring Security 配置
  *
  * @author Aaric, created on 2021-08-10T14:59.
- * @version 0.1.0-SNAPSHOT
+ * @version 0.2.0-SNAPSHOT
  */
 @Configuration
 @EnableWebSecurity
