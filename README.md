@@ -37,6 +37,6 @@ CREATE TABLE base_user(
     created_at DATETIME    COMMENT '创建时间' ,
     updated_by BIGINT    COMMENT '更新人' ,
     updated_at DATETIME    COMMENT '更新时间' ,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id) USING BTREE
 ) COMMENT = '用户表 测试';
 ```

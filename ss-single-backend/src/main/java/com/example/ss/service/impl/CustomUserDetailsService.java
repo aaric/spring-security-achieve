@@ -1,6 +1,10 @@
 package com.example.ss.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.ss.pojo.BaseUser;
+import com.example.ss.test.repository.BaseUserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,13 +21,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    private BaseUserRepository baseUserRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("origin username: {}", username);
-        UserDetails userDetails = User.withUsername("admin")
-                .password("$2a$10$GFxO0rEP3QUq/Tb92Re3P.60bjzo/XDmStAMvZuXJOsKghapaIuvS")
-                .authorities("a1")
-                .build();
+
+        QueryWrapper<BaseUser> queryWrapper = new QueryWrapper<BaseUser>();
+        queryWrapper.lambda()
+                .eq(BaseUser::getUsername, username)
+                .eq(BaseUser::getIsDeleted, 0);
+        BaseUser loginUser = baseUserRepository.selectOne(queryWrapper);
+        log.info("loginUser: {}", loginUser);
+
+        UserDetails userDetails = null;
+        if (null != loginUser) {
+            userDetails = User.withUsername(loginUser.getUsername())
+                    .password(loginUser.getPasswd())
+                    .authorities("a1")
+                    .build();
+        }
         return userDetails;
     }
 }
