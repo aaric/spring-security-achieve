@@ -11,15 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * 自定义用户详情Service接口实现
+ * 数据库用户详情Service接口实现
  *
  * @author Aaric, created on 2021-08-11T15:23.
  * @version 0.3.0-SNAPSHOT
  */
 @Slf4j
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class DbUserDetailsService implements UserDetailsService {
 
     @Autowired
     private BaseUserRepository baseUserRepository;
@@ -37,9 +39,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         UserDetails userDetails = null;
         if (null != loginUser) {
+            List<String> authorityList = baseUserRepository.selectAuthorityList(loginUser.getId());
+            log.info("authorityList: {}", authorityList);
+
+            String[] authorities = new String[authorityList.size()];
+            authorityList.toArray(authorities);
             userDetails = User.withUsername(loginUser.getUsername())
                     .password(loginUser.getPasswd())
-                    .authorities("a1")
+                    .authorities(authorities)
                     .build();
         }
         return userDetails;
