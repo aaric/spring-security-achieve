@@ -39,4 +39,55 @@ CREATE TABLE base_user(
     updated_at DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (id) USING BTREE
 ) COMMENT = '用户表 测试';
+
+-- role table
+CREATE TABLE base_role(
+    id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
+    code VARCHAR(32) NOT NULL   COMMENT '编码' ,
+    name VARCHAR(128) NOT NULL   COMMENT '名称' ,
+    remark VARCHAR(1024)    COMMENT '备注' ,
+    is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
+    created_by BIGINT    COMMENT '创建人' ,
+    created_at DATETIME    COMMENT '创建时间' ,
+    updated_by BIGINT    COMMENT '更新人' ,
+    updated_at DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (id) USING BTREE
+) COMMENT = '角色表 测试';
+
+-- user-role ref table
+CREATE TABLE base_user_role(
+    id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
+    user_id BIGINT NOT NULL   COMMENT '用户ID' ,
+    role_id BIGINT NOT NULL   COMMENT '角色ID' ,
+    is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
+    created_by BIGINT    COMMENT '创建人' ,
+    created_at DATETIME    COMMENT '创建时间' ,
+    PRIMARY KEY (id) USING BTREE
+) COMMENT = '用户角色表 测试';
+
+-- authority table
+CREATE TABLE base_authority(
+    id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
+    code VARCHAR(32) NOT NULL   COMMENT '编码' ,
+    name VARCHAR(128)    COMMENT '名称' ,
+    uri VARCHAR(128)    COMMENT 'URI' ,
+    remark VARCHAR(1024)    COMMENT '备注' ,
+    is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
+    created_by BIGINT    COMMENT '创建人' ,
+    created_at DATETIME    COMMENT '创建时间' ,
+    updated_by BIGINT    COMMENT '更新人' ,
+    updated_at DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (id) USING BTREE
+) COMMENT = '权限表 测试';
+
+-- role-authority ref table
+CREATE TABLE base_role_authority(
+    id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
+    role_id BIGINT NOT NULL   COMMENT '角色ID' ,
+    authority_id INT NOT NULL   COMMENT '权限ID' ,
+    is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
+    created_by BIGINT    COMMENT '创建人' ,
+    created_at DATETIME    COMMENT '创建时间' ,
+    PRIMARY KEY (id) USING BTREE
+) COMMENT = '角色权限表 测试';
 ```

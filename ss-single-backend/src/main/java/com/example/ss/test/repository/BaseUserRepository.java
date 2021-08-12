@@ -19,4 +19,6 @@ public interface BaseUserRepository extends BaseMapper<BaseUser> {
      * @return
      */
     Long totalRecord();
+
+    //List<String>
 }
