@@ -46,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 /*.antMatchers("/r/r1").hasAnyAuthority("a1")
                 .antMatchers("/r/r2").hasAnyAuthority("a2")
                 .anyRequest().permitAll()*/
+                // Knife4j Swagger 允许访问资源
+                .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

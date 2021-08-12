@@ -44,8 +44,6 @@ logging:
 knife4j:
   enable: true
   setting:
-    enableGroup: false
-    enableOpenApi: false
     enableFooterCustom: true
     footerCustomContent: 版权所有 | Copyright 2021
 
