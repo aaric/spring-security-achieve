@@ -44,8 +44,17 @@ logging:
 knife4j:
   enable: true
   setting:
+    enableOpenApi: false
     enableFooterCustom: true
     footerCustomContent: 版权所有 | Copyright 2021
+  document:
+    title: 在线API文档
+    description: Spring Security 框架集成测试
+    version: 0.6.0
+    developer:
+      name: Aaric
+      url: https://github.com/aaric
+      email: vipaaric@gmail.com
 
 # Spring settings
 spring:
