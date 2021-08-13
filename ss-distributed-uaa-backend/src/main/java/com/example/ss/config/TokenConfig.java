@@ -1,9 +1,6 @@
 package com.example.ss.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
  * 令牌配置
@@ -14,10 +11,25 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 public class TokenConfig {
 
-    @Bean
-    TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
-
-
+//    @Autowired
+//    private TokenStore tokenStore;
+//
+//    @Autowired
+//    private ClientDetailsService clientDetailsService;
+//
+//    @Bean
+//    TokenStore tokenStore() {
+//        return new InMemoryTokenStore();
+//    }
+//
+//    @Bean
+//    AuthorizationServerTokenServices tokenServices() {
+//        DefaultTokenServices tokenServices = new DefaultTokenServices();
+//        tokenServices.setClientDetailsService(clientDetailsService);
+//        tokenServices.setSupportRefreshToken(true);
+//        tokenServices.setTokenStore(tokenStore);
+//        tokenServices.setAccessTokenValiditySeconds(24 * 60 * 60);
+//        tokenServices.setRefreshTokenValiditySeconds(3 * 24 * 60 * 60);
+//        return tokenServices;
+//    }
 }
