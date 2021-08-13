@@ -1,0 +1,86 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:9000}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Management settings
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  health:
+    elasticsearch:
+      enabled: false
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        security: INFO
+        web: ERROR
+      hibernate: INFO
+    com:
+      example: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+    max-size: ${LOGGING_FILE_MAX_SIZE:100MB}
+    max-history: ${LOGGING_FILE_MAX_HISTORY:50}
+
+# Knife4j settings
+knife4j:
+  enable: true
+  setting:
+    enableOpenApi: false
+    enableFooterCustom: true
+    footerCustomContent: 版权所有 | Copyright 2021
+  document:
+    title: 在线API文档
+    description: Spring Security 框架集成测试 - 服务网关
+    version: 0.6.0
+    developer:
+      name: Aaric
+      url: https://github.com/aaric
+      email: vipaaric@gmail.com
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ss-distributed-gateway-backend
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.0.11.21:8848
+      config:
+        server-addr: 10.0.11.21:8848
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        ext-config:
+          - data-id: ss-ds-mysql.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+# Zuul settings
+#zuul:
+#  routes:
+#    uaa:
+#      path: /api/uaa/**
+#      service-id: ss-distributed-uaa-backend
+#    order:
+#      path: /api/order/**
+#      service-id: ss-distributed-order-backend
