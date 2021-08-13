@@ -23,6 +23,7 @@ import java.util.Date;
  *
  * @author Aaric, created on 2021-07-30T11:35.
  * @version 0.1.0-SNAPSHOT
+ * @see com.github.xiaoymin.knife4j.spring.configuration.Knife4jAutoConfiguration
  */
 @EnableKnife4j
 @EnableSwagger2WebMvc
@@ -47,13 +48,31 @@ public class Knife4jConfig implements InitializingBean {
                 .build();
     }
 
+    @Value("${knife4j.document.title}")
+    private String documentTitle;
+
+    @Value("${knife4j.document.description}")
+    private String documentDescription;
+
+    @Value("${knife4j.document.version}")
+    private String documentVersion;
+
+    @Value("${knife4j.document.developer.name}")
+    private String developerName;
+
+    @Value("${knife4j.document.developer.url}")
+    private String developerUrl;
+
+    @Value("${knife4j.document.developer.email}")
+    private String developerEmail;
+
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("在线API文档")
-                .description("Spring Security 框架集成测试")
+                .title(documentTitle)
+                .description(documentDescription)
                 .termsOfServiceUrl(MessageFormat.format("http://{0}:{1}/doc.html", serverHost, serverPort))
-                .contact(new Contact("Aaric", "", "vipaaric@gmail.com"))
-                .version("0.6.0")
+                .contact(new Contact(developerName, developerUrl, developerEmail))
+                .version(documentVersion)
                 .build();
     }
 
