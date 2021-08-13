@@ -94,6 +94,8 @@ CREATE TABLE base_role_authority(
 
 ## 3 Spring Security + OAuth2
 
+> [oauth2-schema.sql](https://github.com/spring-projects/spring-security-oauth/blob/2.3.4.RELEASE/spring-security-oauth2/src/test/resources/schema.sql)
+
 ### 3.1 Spring Boot For Gradle
 
 ```groovy
