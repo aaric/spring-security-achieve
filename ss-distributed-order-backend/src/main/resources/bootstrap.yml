@@ -1,0 +1,107 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:9200}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Management settings
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  health:
+    elasticsearch:
+      enabled: false
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        security: INFO
+        web: ERROR
+      hibernate: INFO
+    com:
+      example: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+    max-size: ${LOGGING_FILE_MAX_SIZE:100MB}
+    max-history: ${LOGGING_FILE_MAX_HISTORY:50}
+
+# Knife4j settings
+knife4j:
+  enable: true
+  setting:
+    enableOpenApi: false
+    enableFooterCustom: true
+    footerCustomContent: 版权所有 | Copyright 2021
+  document:
+    title: 在线API文档
+    description: Spring Security 框架集成测试 - 订单
+    version: 0.6.0
+    developer:
+      name: Aaric
+      url: https://github.com/aaric
+      email: vipaaric@gmail.com
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ss-distributed-order-backend
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.0.11.21:8848
+      config:
+        server-addr: 10.0.11.21:8848
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        ext-config:
+          - data-id: ss-ds-mysql.yml
+            group: DEFAULT_GROUP
+            refresh: true
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/testdb?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
+#    username: testdb
+#    password: testdb
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      initial-size: 5
+#      max-active: 20
+#      min-idle: 5
+#      max-wait: 60000
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#      max-open-prepared-statements: 20
+#      validation-query: SELECT 1 FROM DUAL
+#      test-on-borrow: false
+#      test-on-return: false
+#      test-while-idle: true
+#      time-between-eviction-runs-millis: 60000
+#      min-evictable-idle-time-millis: 300000
+#      filters: stat,wall
+
+# MyBatis-Plus settings
+#mybatis-plus:
+#  mapper-locations: classpath*:mapper/**Mapper.xml
+#  global-config:
+#    db-column-underline: true
+#    refresh-mapper: true
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false

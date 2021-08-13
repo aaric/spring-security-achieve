@@ -8,9 +8,9 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * UAA应用
+ * 订单应用
  *
- * @author Aaric, created on 2021-08-13T17:00.
+ * @author Aaric, created on 2021-08-13T17:15.
  * @version 0.6.0-SNAPSHOT
  */
 @SpringBootApplication
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.example.ss.*.repository")
 @EnableDiscoveryClient
 @RefreshScope
-public class UaaApp {
+public class OrderApp {
 
     /**
      * main
@@ -26,6 +26,6 @@ public class UaaApp {
      * @param args custom inputs
      */
     public static void main(String[] args) {
-        SpringApplication.run(UaaApp.class, args);
+        SpringApplication.run(OrderApp.class, args);
     }
 }
