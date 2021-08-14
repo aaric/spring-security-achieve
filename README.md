@@ -5,7 +5,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![build](https://github.com/aaric/spring-security-achieve/workflows/build/badge.svg)](https://github.com/aaric/spring-security-achieve/actions)
-[![release](https://img.shields.io/badge/release-0.6.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
+[![release](https://img.shields.io/badge/release-0.7.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
 
 Spring Security Learning.
 
@@ -90,4 +90,26 @@ CREATE TABLE base_role_authority(
     created_at DATETIME    COMMENT '创建时间' ,
     PRIMARY KEY (id) USING BTREE
 ) COMMENT = '角色权限表 测试';
+```
+
+## 3 Spring Security + OAuth2
+
+> [oauth2-schema.sql](https://github.com/spring-projects/spring-security-oauth/blob/2.3.4.RELEASE/spring-security-oauth2/src/test/resources/schema.sql)
+
+### 3.1 Spring Boot For Gradle
+
+```groovy
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure"
+}
+```
+
+### 3.2 Spring Cloud For Gradle
+
+```groovy
+dependencies {
+    implementation "org.springframework.cloud:spring-cloud-starter-security"
+    implementation "org.springframework.cloud:spring-cloud-starter-oauth2"
+}
 ```

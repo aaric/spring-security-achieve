@@ -9,7 +9,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation"
 
     implementation "org.springframework.boot:spring-boot-starter-security"
-    //implementation "org.springframework.security.oauth:spring-security-oauth2"
+    //implementation "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure"
 
     implementation "mysql:mysql-connector-java"
     implementation "com.alibaba:druid-spring-boot-starter"
