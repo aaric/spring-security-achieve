@@ -73,7 +73,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient("client")
                 .secret(passwordEncoder.encode("secret"))
-                .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit", "refresh_token")
+                .authorizedGrantTypes("authorization_code", "implicit", "password", "client_credentials", "refresh_token")
                 .scopes("all")
                 .resourceIds("res01")
                 // autoApprove=false 跳转到授权页面
