@@ -11,9 +11,3 @@ GET {{base_url}}/oauth/authorize?response_type=token&client_id=client&scop=all&r
 
 POST {{base_url}}/oauth/check_token?token=7bf88e52-511b-435c-bd00-8d9b97b3da0d
 Content-Type: application/json
-
-#### /test
-
-GET http://localhost:9200/v1/test/order/getDataId
-Content-Type: application/json
-#Authorization: Bearer 7bf88e52-511b-435c-bd00-8d9b97b3da0d

@@ -14,4 +14,10 @@ public interface OrderApi {
 
     @ApiOperation("获取DataId")
     String getDataId();
+
+    @ApiOperation("R1")
+    String r1();
+
+    @ApiOperation("R2")
+    String r2();
 }

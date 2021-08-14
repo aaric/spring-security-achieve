@@ -47,7 +47,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
                 .antMatchers("/v1/**").access("#oauth2.hasScope('all')")
                 .and()
                 .sessionManagement()
