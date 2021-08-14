@@ -3,6 +3,7 @@
 @client_secret = secret
 @redirect_uri = http://example.com
 @code = anqJZO
+
 ### /oauth/authorize
 
 GET {{base_url}}/oauth/authorize?response_type=code&client_id=client&scop=all&redirect_uri=http://example.com
@@ -11,3 +12,9 @@ GET {{base_url}}/oauth/authorize?response_type=code&client_id=client&scop=all&re
 
 POST {{base_url}}/oauth/token?client_id={{client_id}}&client_secret={{client_secret}}&grant_type=authorization_code&code={{code}}&redirect_uri={{redirect_uri}}
 Content-Type: application/json
+
+### /oauth/check_token
+
+POST {{base_url}}/oauth/check_token?token=7bf88e52-511b-435c-bd00-8d9b97b3da0d
+Content-Type: application/json
+

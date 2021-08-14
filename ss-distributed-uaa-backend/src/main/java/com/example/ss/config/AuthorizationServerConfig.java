@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
- * 资源服务器配置
+ * 授权服务器配置
  *
  * @author Aaric, created on 2021-08-13T23:28.
  * @version 0.7.0-SNAPSHOT
@@ -75,7 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode("secret"))
                 .authorizedGrantTypes("authorization_code", "implicit", "password", "client_credentials", "refresh_token")
                 .scopes("all")
-                .resourceIds("res01")
+                .resourceIds("res1")
                 // autoApprove=false 跳转到授权页面
                 .autoApprove(false)
                 .redirectUris("http://example.com");
