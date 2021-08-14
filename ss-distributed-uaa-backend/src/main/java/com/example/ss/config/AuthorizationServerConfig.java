@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -30,6 +30,9 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private TokenStore tokenStore;
 
     @Autowired
@@ -51,13 +54,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     AuthorizationServerTokenServices tokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setClientDetailsService(clientDetailsService);
-        tokenServices.setSupportRefreshToken(true);
-        tokenServices.setTokenStore(tokenStore);
-        tokenServices.setAccessTokenValiditySeconds(24 * 60 * 60);
-        tokenServices.setRefreshTokenValiditySeconds(3 * 24 * 60 * 60);
-        return tokenServices;
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setClientDetailsService(clientDetailsService);
+        defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setTokenStore(tokenStore);
+        defaultTokenServices.setAccessTokenValiditySeconds(24 * 60 * 60);
+        defaultTokenServices.setRefreshTokenValiditySeconds(3 * 24 * 60 * 60);
+        return defaultTokenServices;
     }
 
     @Bean
@@ -69,13 +72,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("client")
-                .secret(new BCryptPasswordEncoder().encode("secret"))
+                .secret(passwordEncoder.encode("secret"))
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit", "refresh_token")
                 .scopes("all")
                 .resourceIds("res01")
                 // autoApprove=false 跳转到授权页面
                 .autoApprove(false)
-                .redirectUris("https://www.baidu.com");
+                .redirectUris("http://example.com");
     }
 
     @Override
