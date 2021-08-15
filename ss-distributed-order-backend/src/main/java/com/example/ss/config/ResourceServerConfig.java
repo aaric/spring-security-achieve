@@ -1,7 +1,6 @@
 package com.example.ss.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,8 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
  * 资源服务器配置
@@ -25,7 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     public static final String RESOURCE_ID = "res1";
 
-    @Autowired
+    /*@Autowired
     private ResourceServerTokenServices tokenServices;
 
     @Bean
@@ -35,12 +33,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         remoteTokenServices.setClientId("client");
         remoteTokenServices.setClientSecret("secret");
         return remoteTokenServices;
-    }
+    }*/
+
+    @Autowired
+    private TokenStore tokenStore;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(RESOURCE_ID)
-                .tokenServices(tokenServices)
+                /*.tokenServices(tokenServices)*/
+                .tokenStore(tokenStore)
                 .stateless(true);
     }
 
