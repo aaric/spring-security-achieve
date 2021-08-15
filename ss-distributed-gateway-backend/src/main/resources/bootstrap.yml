@@ -50,7 +50,7 @@ knife4j:
   document:
     title: 在线API文档
     description: Spring Security 框架集成测试 - 服务网关
-    version: 0.7.0
+    version: 0.8.0
     developer:
       name: Aaric
       url: https://github.com/aaric

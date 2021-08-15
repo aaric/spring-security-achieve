@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCo
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
  * 授权服务器配置
@@ -46,11 +45,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private AuthorizationCodeServices authorizationCodeServices;
-
-    @Bean
-    TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
 
     @Bean
     AuthorizationServerTokenServices tokenServices() {
