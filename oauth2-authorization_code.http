@@ -2,7 +2,7 @@
 @client_id = client
 @client_secret = secret
 @redirect_uri = http://example.com
-@code = anqJZO
+@code = 2iU9qX
 
 ### /oauth/authorize
 
@@ -15,6 +15,4 @@ Content-Type: application/json
 
 ### /oauth/check_token
 
-POST {{base_url}}/oauth/check_token?token=7bf88e52-511b-435c-bd00-8d9b97b3da0d
-Content-Type: application/json
-
+curl -i -X POST  -u 'demoApp:demoAppSecret' -d 'grant_type=refresh_token&refresh_token=95844d87-f06e-4a4e-b76c-f16c5329e287' http://localhost:8080/oauth/token
