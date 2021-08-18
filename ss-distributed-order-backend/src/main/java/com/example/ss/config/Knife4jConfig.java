@@ -69,15 +69,7 @@ public class Knife4jConfig implements InitializingBean {
                 .build();
     }
 
-    private List<Parameter> operationParameters() {
-        // Header 请求参数
-        List<Parameter> params = new ArrayList<>();
-        params.add(getParameterBuilder("locale", "国际化参数", "query", "zh_CN", false).build());
-        params.add(getParameterBuilder("Authorization", "OAuth2 Token", "header", "Bearer token", false).build());
-        return params;
-    }
-
-    private ParameterBuilder getParameterBuilder(String name, String description, String parameterType, String example, boolean required) {
+    private ParameterBuilder parameterBuilder(String name, String description, String parameterType, String example, boolean required) {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
         parameterBuilder.name(name).description(description)
                 .modelRef(new ModelRef("string"))
@@ -87,13 +79,21 @@ public class Knife4jConfig implements InitializingBean {
         return parameterBuilder;
     }
 
+    private List<Parameter> globalOperationParameters() {
+        // Header 请求参数
+        List<Parameter> params = new ArrayList<>();
+        params.add(parameterBuilder("locale", "国际化参数", "query", "zh_CN", false).build());
+        params.add(parameterBuilder("Authorization", "OAuth2 Token", "header", "Bearer token", false).build());
+        return params;
+    }
+
     @Bean
     Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .host(serverHost)
                 .apiInfo(apiInfo())
                 .directModelSubstitute(Date.class, Long.class)
-                .globalOperationParameters(operationParameters())
+                .globalOperationParameters(globalOperationParameters())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.ss"))
                 .paths(PathSelectors.any())
