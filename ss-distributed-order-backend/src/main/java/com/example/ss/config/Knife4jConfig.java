@@ -41,19 +41,6 @@ public class Knife4jConfig implements InitializingBean {
     @Value("${server.port}")
     private String serverPort;
 
-    @Bean
-    Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .host(serverHost)
-                .apiInfo(apiInfo())
-                .directModelSubstitute(Date.class, Long.class)
-                .globalOperationParameters(operationParameters())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.ss"))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
     @Value("${knife4j.document.title}")
     private String documentTitle;
 
@@ -98,6 +85,19 @@ public class Knife4jConfig implements InitializingBean {
                 .scalarExample(example)
                 .required(required);
         return parameterBuilder;
+    }
+
+    @Bean
+    Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .host(serverHost)
+                .apiInfo(apiInfo())
+                .directModelSubstitute(Date.class, Long.class)
+                .globalOperationParameters(operationParameters())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.ss"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
     @Override
