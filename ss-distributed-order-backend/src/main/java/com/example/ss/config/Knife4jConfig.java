@@ -82,7 +82,7 @@ public class Knife4jConfig implements InitializingBean {
     private List<Parameter> globalOperationParameters() {
         // Header 请求参数
         List<Parameter> params = new ArrayList<>();
-        params.add(parameterBuilder("locale", "国际化参数", "query", "zh_CN", false).build());
+        params.add(parameterBuilder("locale", "语言：zh_CN-简体中文（默认），en_US-美式英语", "query", "zh_CN", false).build());
         params.add(parameterBuilder("Authorization", "OAuth2 Token", "header", "Bearer token", false).build());
         return params;
     }
