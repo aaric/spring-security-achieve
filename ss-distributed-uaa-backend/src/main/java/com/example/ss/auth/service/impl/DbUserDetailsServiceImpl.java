@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 据库用户详情Service接口实现
+ * 数据库用户详情Service接口实现
  *
  * @author Aaric, created on 2021-08-14T07:25.
  * @version 0.7.0-SNAPSHOT
