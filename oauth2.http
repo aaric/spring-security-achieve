@@ -1,0 +1,41 @@
+@base_url = http://localhost:9100
+@client_id = client
+@client_secret = secret
+@redirect_uri = http://example.com
+@code = chYRzz
+@username = admin
+@password = admin
+@access_token = edea2890-1693-4fab-b638-ef6a055df217
+@refresh_token = bc1695b7-9264-44c5-9ba7-2feec40b4d49
+
+### authorization_code: /oauth/authorize
+
+GET {{base_url}}/oauth/authorize?response_type=code&client_id=client&scop=all&redirect_uri=http://example.com
+
+### authorization_code: /oauth/token
+
+POST {{base_url}}/oauth/token?grant_type=authorization_code&client_id={{client_id}}&client_secret={{client_secret}}&code={{code}}&redirect_uri={{redirect_uri}}
+Content-Type: application/json
+
+### implicit: /oauth/token
+
+GET {{base_url}}/oauth/authorize?response_type=token&client_id=client&scop=all&redirect_uri=http://example.com
+
+### password: /oauth/token
+
+POST {{base_url}}/oauth/token?client_id={{client_id}}&client_secret={{client_secret}}&grant_type=password&username={{username}}&password={{password}}
+Content-Type: application/json
+
+### client_credentials
+
+POST {{base_url}}/oauth/token?grant_type=client_credentials&client_id={{client_id}}&client_secret={{client_secret}}
+
+### /oauth/check_token
+
+POST {{base_url}}/oauth/check_token?token={{access_token}}
+Content-Type: application/json
+
+### refresh_token: /oauth/check_token
+
+POST {{base_url}}/oauth/token?client_id={{client_id}}&client_secret={{client_secret}}&grant_type=refresh_token&refresh_token={{refresh_token}}
+Content-Type: application/json

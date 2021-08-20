@@ -75,7 +75,7 @@ spring:
           - data-id: ss-spring-datasource.yml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: ss-ds-mysql.yml
+          - data-id: ss-spring-redis.yml
             group: DEFAULT_GROUP
             refresh: true
   datasource:

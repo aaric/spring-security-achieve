@@ -1,7 +1,7 @@
 package com.example.ss.config;
 
+import com.example.ss.auth.service.impl.DbUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,21 +12,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-import java.util.Arrays;
+import javax.sql.DataSource;
 
 /**
  * 授权服务器配置
  *
  * @author Aaric, created on 2021-08-13T23:28.
- * @version 0.7.0-SNAPSHOT
+ * @version 0.8.0-SNAPSHOT
  */
 @Configuration
 @EnableAuthorizationServer
@@ -36,63 +31,37 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private AuthorizationServerTokenServices tokenServices;
-
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private AuthorizationCodeServices authorizationCodeServices;
+    private TokenStore tokenStore;
 
     @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
+    private DbUserDetailsServiceImpl dbUserDetailsService;
 
-    @Bean
-    AuthorizationServerTokenServices tokenServices() {
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setClientDetailsService(clientDetailsService);
-        defaultTokenServices.setSupportRefreshToken(true);
-        defaultTokenServices.setTokenStore(tokenStore);
-
-        // jwt token
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
-        defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
-
-        defaultTokenServices.setAccessTokenValiditySeconds(24 * 60 * 60);
-        defaultTokenServices.setRefreshTokenValiditySeconds(3 * 24 * 60 * 60);
-        return defaultTokenServices;
-    }
-
-    @Bean
-    AuthorizationCodeServices authorizationCodeServices() {
-        return new InMemoryAuthorizationCodeServices();
-    }
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
+        /*clients.inMemory()
                 .withClient("client")
                 .secret(passwordEncoder.encode("secret"))
                 .authorizedGrantTypes("authorization_code", "implicit", "password", "client_credentials", "refresh_token")
                 .scopes("all")
-                .resourceIds("res1")
+                .resourceIds("test")
                 // autoApprove=false 跳转到授权页面
                 .autoApprove(false)
-                .redirectUris("http://example.com");
+                .redirectUris("http://example.com");*/
+        ClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        clients.withClientDetails(clientDetailsService);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)
-                .authorizationCodeServices(authorizationCodeServices)
-                .tokenServices(tokenServices)
+                .tokenStore(tokenStore)
+                .userDetailsService(dbUserDetailsService)
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 
