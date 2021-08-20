@@ -8,6 +8,7 @@ rootProject.name = "spring-security-achieve"
 
 include "ss-common"
 include "ss-single-backend"
+include "ss-distributed-auth-api"
 include "ss-distributed-auth-backend"
 include "ss-distributed-base-backend"
 include "ss-distributed-gateway-backend"
