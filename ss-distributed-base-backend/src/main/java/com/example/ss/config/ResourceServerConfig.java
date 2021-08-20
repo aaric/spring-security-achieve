@@ -35,6 +35,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
+                // test login token
+                .antMatchers("/v1/test/token/login", "/v1/test/token/valid", "/v1/test/token/refresh").permitAll()
                 .antMatchers("/**").access("#oauth2.hasScope('all')")
                 .and()
                 .sessionManagement()
