@@ -29,8 +29,9 @@ logging:
     root: ERROR
     org:
       springframework:
-        security: INFO
         web: ERROR
+        security: INFO
+        boot: INFO
       hibernate: INFO
     com:
       example: DEBUG
@@ -70,16 +71,13 @@ spring:
         server-addr: 10.0.11.21:8848
         file-extension: yaml
         group: DEFAULT_GROUP
-        ext-config:
-          - data-id: ss-ds-mysql.yml
-            group: DEFAULT_GROUP
-            refresh: true
 
 # Zuul settings
-#zuul:
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
 #  routes:
 #    uaa:
-#      path: /api/uaa/**
+#      path: /api/auth/**
 #      service-id: ss-distributed-uaa-backend
 #    order:
 #      path: /api/order/**

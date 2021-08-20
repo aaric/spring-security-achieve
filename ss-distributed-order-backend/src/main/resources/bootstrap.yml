@@ -29,8 +29,9 @@ logging:
     root: ERROR
     org:
       springframework:
-        security: INFO
         web: ERROR
+        security: INFO
+        boot: INFO
       hibernate: INFO
     com:
       example: DEBUG
@@ -73,37 +74,45 @@ spring:
         file-extension: yaml
         group: DEFAULT_GROUP
         ext-config:
+          - data-id: ss-spring-datasource.yml
+            group: DEFAULT_GROUP
+            refresh: true
           - data-id: ss-ds-mysql.yml
             group: DEFAULT_GROUP
             refresh: true
-#  datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/testdb?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
-#    username: testdb
-#    password: testdb
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    druid:
-#      initial-size: 5
-#      max-active: 20
-#      min-idle: 5
-#      max-wait: 60000
-#      pool-prepared-statements: true
-#      max-pool-prepared-statement-per-connection-size: 20
-#      max-open-prepared-statements: 20
-#      validation-query: SELECT 1 FROM DUAL
-#      test-on-borrow: false
-#      test-on-return: false
-#      test-while-idle: true
-#      time-between-eviction-runs-millis: 60000
-#      min-evictable-idle-time-millis: 300000
-#      filters: stat,wall
+  datasource:
+    #url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:testdb}?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
+    #username: ${MYSQL_USERNAME:testdb}
+    #password: ${MYSQL_PASSWORD:testdb}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      max-open-prepared-statements: 20
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall
+  redis:
+    #host: ${REDIS_HOST:127.0.0.1}
+    #port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:redis2019}
+    database: ${REDIS_DATABASE:8}
 
 # MyBatis-Plus settings
-#mybatis-plus:
-#  mapper-locations: classpath*:mapper/**Mapper.xml
-#  global-config:
-#    db-column-underline: true
-#    refresh-mapper: true
-#  configuration:
-#    map-underscore-to-camel-case: true
-#    cache-enabled: false
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**Mapper.xml
+  global-config:
+    db-column-underline: true
+    refresh-mapper: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false

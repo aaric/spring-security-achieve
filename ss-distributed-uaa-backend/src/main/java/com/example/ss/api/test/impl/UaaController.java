@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/test/uaa")
 public class UaaController implements UaaApi {
 
-    @Value("${nacos.data-id}")
+    @Value("${uaa.data-id}")
     private String dataId;
 
     @Override
