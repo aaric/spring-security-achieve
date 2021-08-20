@@ -5,7 +5,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![build](https://github.com/aaric/spring-security-achieve/workflows/build/badge.svg)](https://github.com/aaric/spring-security-achieve/actions)
-[![release](https://img.shields.io/badge/release-0.7.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
+[![release](https://img.shields.io/badge/release-0.8.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
 
 Spring Security Learning.
 
@@ -62,15 +62,18 @@ CREATE TABLE base_user_role(
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
     created_at DATETIME    COMMENT '创建时间' ,
-    PRIMARY KEY (id) USING BTREE
+    PRIMARY KEY (id) USING BTREE ,
+    FOREIGN KEY (`user_id`) REFERENCES `base_user` (`id`) ,
+    FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`)
 ) COMMENT = '用户角色表 测试';
 
 -- authority table
 CREATE TABLE base_authority(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
     code VARCHAR(32) NOT NULL   COMMENT '编码' ,
-    name VARCHAR(128)    COMMENT '名称' ,
-    uri VARCHAR(128)    COMMENT 'URI' ,
+    name VARCHAR(128)    COMMENT '资源名称' ,
+    http_method VARCHAR(32)    COMMENT '请求方法' ,
+    http_url VARCHAR(1024)    COMMENT '请求路径' ,
     remark VARCHAR(1024)    COMMENT '备注' ,
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
@@ -88,7 +91,9 @@ CREATE TABLE base_role_authority(
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
     created_at DATETIME    COMMENT '创建时间' ,
-    PRIMARY KEY (id) USING BTREE
+    PRIMARY KEY (id) USING BTREE ,
+    FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`) ,
+    FOREIGN KEY (`authority_id`) REFERENCES `base_authority` (`id`)
 ) COMMENT = '角色权限表 测试';
 ```
 
@@ -96,7 +101,36 @@ CREATE TABLE base_role_authority(
 
 > [oauth2-schema.sql](https://github.com/spring-projects/spring-security-oauth/blob/2.3.4.RELEASE/spring-security-oauth2/src/test/resources/schema.sql)
 
-### 3.1 Spring Boot For Gradle
+### 3.1 MySQL Table
+
+|No.|客户端ID|客户端密钥|授权资源IDs|授权范围|统一认证回调地址|访问令牌过期秒|刷新令牌过期秒|备注|
+|:-:|:-:|---|:-:|:-:|---|:-:|:-:|---|
+|1|client|secret|test|all|http://example.com|12h|1d|`仅限测试使用`|
+
+```mysql
+-- create oauth2 table
+CREATE TABLE `oauth_client_details` (
+  `client_id` varchar(128) NOT NULL COMMENT '客户端ID',
+  `resource_ids` varchar(256) DEFAULT NULL COMMENT '客户端的资源ID集合（英文逗号分隔）',
+  `client_secret` varchar(256) DEFAULT NULL COMMENT '客户端密钥',
+  `scope` varchar(256) DEFAULT NULL COMMENT '客户端的授权范围（英文逗号分隔）',
+  `authorized_grant_types` varchar(256) DEFAULT NULL COMMENT '客户端支持的授权类型（英文逗号分隔）',
+  `web_server_redirect_uri` varchar(256) DEFAULT NULL COMMENT '客户端的统一认证回调URI，仅限authorization_code或implicit类型',
+  `authorities` varchar(256) DEFAULT NULL COMMENT '客户端的权限集合（英文逗号分隔）',
+  `access_token_validity` int(11) DEFAULT NULL COMMENT '客户端的访问令牌过期秒',
+  `refresh_token_validity` int(11) DEFAULT NULL COMMENT '客户端的刷新令牌过期秒',
+  `additional_information` varchar(4096) DEFAULT NULL COMMENT '预留字段（必须为JSON数据格式）',
+  `autoapprove` varchar(256) DEFAULT NULL COMMENT '设置用户是否需求授权操作，默认值为false',
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='OAuth2客户端详情表';
+
+INSERT INTO `oauth_client_details`
+(`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
+VALUES
+('client', 'base', '$2a$10$AAQ0cD25u0brKc0d3F7mpe8Yg1YODZaQHR9xHxeae.0Mf0NgISmlK', 'all', 'authorization_code,implicit,password,client_credentials,refresh_token', 'http://example.com', 43200, 86400, NULL);
+```
+
+### 3.2 Spring Boot For Gradle
 
 ```groovy
 dependencies {
@@ -105,7 +139,7 @@ dependencies {
 }
 ```
 
-### 3.2 Spring Cloud For Gradle
+### 3.3 Spring Cloud For Gradle
 
 ```groovy
 dependencies {

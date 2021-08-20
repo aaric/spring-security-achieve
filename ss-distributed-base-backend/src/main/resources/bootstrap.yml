@@ -1,0 +1,122 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:9200}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Management settings
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  health:
+    elasticsearch:
+      enabled: false
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+      hibernate: INFO
+    com:
+      example: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+    max-size: ${LOGGING_FILE_MAX_SIZE:100MB}
+    max-history: ${LOGGING_FILE_MAX_HISTORY:50}
+
+# Knife4j settings
+knife4j:
+  enable: true
+  setting:
+    enableOpenApi: false
+    enableFooterCustom: true
+    footerCustomContent: 版权所有 | Copyright 2021
+  document:
+    title: 在线API文档
+    description: Spring Security OAuth2 框架集成测试 - 基础支撑
+    version: 0.8.0
+    developer:
+      name: Aaric
+      url: https://github.com/aaric
+      email: vipaaric@gmail.com
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ss-distributed-base-backend
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.0.11.21:8848
+      config:
+        server-addr: 10.0.11.21:8848
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        ext-config:
+          - data-id: ss-spring-datasource.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: ss-spring-redis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+  datasource:
+    #url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:testdb}?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
+    #username: ${MYSQL_USERNAME:testdb}
+    #password: ${MYSQL_PASSWORD:testdb}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      max-open-prepared-statements: 20
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall
+  redis:
+    #host: ${REDIS_HOST:127.0.0.1}
+    #port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:redis2019}
+    database: ${REDIS_DATABASE:8}
+
+# MyBatis-Plus settings
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**Mapper.xml
+  global-config:
+    db-column-underline: true
+    refresh-mapper: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+# Base settings
+#base:
+#  data-id: ${spring.application.name}

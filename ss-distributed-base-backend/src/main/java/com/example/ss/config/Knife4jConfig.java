@@ -6,14 +6,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.net.InetAddress;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Knife4j Swagger 配置
@@ -61,10 +69,35 @@ public class Knife4jConfig implements InitializingBean {
                 .build();
     }
 
+    private ParameterBuilder parameterBuilder(String name, String description, String parameterType, String example, boolean required) {
+        ParameterBuilder parameterBuilder = new ParameterBuilder();
+        parameterBuilder.name(name).description(description)
+                .modelRef(new ModelRef("string"))
+                .parameterType(parameterType)
+                .scalarExample(example)
+                .required(required);
+        return parameterBuilder;
+    }
+
+    private List<Parameter> globalOperationParameters() {
+        // Header 请求参数
+        List<Parameter> params = new ArrayList<>();
+        params.add(parameterBuilder("locale", "语言：zh_CN-简体中文（默认），en_US-美式英语", "query", "zh_CN", false).build());
+        params.add(parameterBuilder("Authorization", "OAuth2 Token", "header", "Bearer token", false).build());
+        return params;
+    }
+
     @Bean
     Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo());
+                .host(serverHost)
+                .apiInfo(apiInfo())
+                .directModelSubstitute(Date.class, Long.class)
+                .globalOperationParameters(globalOperationParameters())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.ss"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
     @Override

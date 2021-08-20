@@ -6,7 +6,8 @@ pluginManagement {
 
 rootProject.name = "spring-security-achieve"
 
+include "ss-common"
 include "ss-single-backend"
-include "ss-distributed-uaa-backend"
-include "ss-distributed-order-backend"
+include "ss-distributed-auth-backend"
+include "ss-distributed-base-backend"
 include "ss-distributed-gateway-backend"

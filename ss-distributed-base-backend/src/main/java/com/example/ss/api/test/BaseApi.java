@@ -5,16 +5,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 测试模块API接口
+ * 测试基础支撑模块API接口
  *
- * @author Aaric, created on 2021-08-10T13:55.
- * @version 0.1.0-SNAPSHOT
+ * @author Aaric, created on 2021-08-13T13:55.
+ * @version 0.8.0-SNAPSHOT
  */
-@Api(tags = "测试模块API")
-public interface TestApi {
+@Api(tags = "测试基础支撑模块API")
+public interface BaseApi {
 
-    @ApiOperation("OK")
-    ApiData<String> ok();
+    @ApiOperation("获取DataId")
+    ApiData<String> getDataId();
 
     @ApiOperation("R1")
     ApiData<String> r1();
