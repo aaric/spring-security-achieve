@@ -50,7 +50,7 @@ knife4j:
     footerCustomContent: 版权所有 | Copyright 2021
   document:
     title: 在线API文档
-    description: Spring Security 框架集成测试 - UAA
+    description: Spring Security OAuth2 框架集成测试 - 授权认证
     version: 0.8.0
     developer:
       name: Aaric
@@ -62,7 +62,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: ss-distributed-uaa-backend
+    name: ss-distributed-auth-backend
   cloud:
     nacos:
       discovery:
@@ -115,6 +115,6 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-# UAA settings
-#uaa:
-#  data-id: ss-distributed-uaa-backend
+# Auth settings
+#auth:
+#  data-id: ${spring.application.name}
