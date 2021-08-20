@@ -62,15 +62,18 @@ CREATE TABLE base_user_role(
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
     created_at DATETIME    COMMENT '创建时间' ,
-    PRIMARY KEY (id) USING BTREE
+    PRIMARY KEY (id) USING BTREE ,
+    FOREIGN KEY (`user_id`) REFERENCES `base_user` (`id`) ,
+    FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`)
 ) COMMENT = '用户角色表 测试';
 
 -- authority table
 CREATE TABLE base_authority(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
     code VARCHAR(32) NOT NULL   COMMENT '编码' ,
-    name VARCHAR(128)    COMMENT '名称' ,
-    uri VARCHAR(128)    COMMENT 'URI' ,
+    name VARCHAR(128)    COMMENT '资源名称' ,
+    http_method VARCHAR(32)    COMMENT '请求方法' ,
+    http_url VARCHAR(1024)    COMMENT '请求路径' ,
     remark VARCHAR(1024)    COMMENT '备注' ,
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
@@ -88,7 +91,9 @@ CREATE TABLE base_role_authority(
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
     created_at DATETIME    COMMENT '创建时间' ,
-    PRIMARY KEY (id) USING BTREE
+    PRIMARY KEY (id) USING BTREE ,
+    FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`) ,
+    FOREIGN KEY (`authority_id`) REFERENCES `base_authority` (`id`)
 ) COMMENT = '角色权限表 测试';
 ```
 
