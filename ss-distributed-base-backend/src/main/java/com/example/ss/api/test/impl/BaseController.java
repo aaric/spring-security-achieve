@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 测试订单模块API接口控制器
+ * 测试基础支撑模块API接口控制器
  *
  * @author Aaric, created on 2021-08-13T13:56.
  * @version 0.8.0-SNAPSHOT

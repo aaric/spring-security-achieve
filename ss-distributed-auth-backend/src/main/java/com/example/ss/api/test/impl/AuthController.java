@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 测试UAA模块API接口控制器
+ * 测试授权认证模块API接口控制器
  *
  * @author Aaric, created on 2021-08-13T13:56.
  * @version 0.8.0-SNAPSHOT
