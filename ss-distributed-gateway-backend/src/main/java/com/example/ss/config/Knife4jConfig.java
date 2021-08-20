@@ -33,12 +33,6 @@ public class Knife4jConfig implements InitializingBean {
     @Value("${server.port}")
     private String serverPort;
 
-    @Bean
-    Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo());
-    }
-
     @Value("${knife4j.document.title}")
     private String documentTitle;
 
@@ -65,6 +59,12 @@ public class Knife4jConfig implements InitializingBean {
                 .contact(new Contact(developerName, developerUrl, developerEmail))
                 .version(documentVersion)
                 .build();
+    }
+
+    @Bean
+    Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo());
     }
 
     @Override

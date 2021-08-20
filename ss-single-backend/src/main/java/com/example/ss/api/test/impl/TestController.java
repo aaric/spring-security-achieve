@@ -1,6 +1,7 @@
 package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.TestApi;
+import com.example.ss.data.ApiData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,21 +30,24 @@ public class TestController implements TestApi {
 
     @Override
     @GetMapping("/ok")
-    public String ok() {
-        return getUsername() + " login success";
+    public ApiData<String> ok() {
+        return new ApiData<String>()
+                .setData(getUsername() + " login success");
     }
 
     @Override
     @GetMapping("/r/r1")
     @PreAuthorize("hasAuthority('a1')")
-    public String r1() {
-        return getUsername() + " visit r1";
+    public ApiData<String> r1() {
+        return new ApiData<String>()
+                .setData(getUsername() + " visit r1");
     }
 
     @Override
     @GetMapping("/r/r2")
     @PreAuthorize("hasAuthority('a2')")
-    public String r2() {
-        return getUsername() + " visit r2";
+    public ApiData<String> r2() {
+        return new ApiData<String>()
+                .setData(getUsername() + " visit r2");
     }
 }

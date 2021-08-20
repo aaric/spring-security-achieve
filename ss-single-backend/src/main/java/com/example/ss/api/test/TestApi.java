@@ -1,5 +1,6 @@
 package com.example.ss.api.test;
 
+import com.example.ss.data.ApiData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -13,11 +14,11 @@ import io.swagger.annotations.ApiOperation;
 public interface TestApi {
 
     @ApiOperation("OK")
-    String ok();
+    ApiData<String> ok();
 
     @ApiOperation("R1")
-    String r1();
+    ApiData<String> r1();
 
     @ApiOperation("R2")
-    String r2();
+    ApiData<String> r2();
 }

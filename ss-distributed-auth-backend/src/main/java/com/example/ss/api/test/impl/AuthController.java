@@ -1,6 +1,7 @@
 package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.AuthApi;
+import com.example.ss.data.ApiData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,8 @@ public class AuthController implements AuthApi {
 
     @Override
     @GetMapping("/getDataId")
-    public String getDataId() {
-        return "dataId: " + dataId;
+    public ApiData<String> getDataId() {
+        return new ApiData<String>()
+                .setData("dataId: " + dataId);
     }
 }

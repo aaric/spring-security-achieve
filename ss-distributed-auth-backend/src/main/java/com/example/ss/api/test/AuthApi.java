@@ -1,5 +1,6 @@
 package com.example.ss.api.test;
 
+import com.example.ss.data.ApiData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -13,5 +14,5 @@ import io.swagger.annotations.ApiOperation;
 public interface AuthApi {
 
     @ApiOperation("获取DataId")
-    String getDataId();
+    ApiData<String> getDataId();
 }

@@ -1,6 +1,7 @@
 package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.BaseApi;
+import com.example.ss.data.ApiData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +27,9 @@ public class BaseController implements BaseApi {
 
     @Override
     @GetMapping("/test/getDataId")
-    public String getDataId() {
-        return "dataId: " + dataId;
+    public ApiData<String> getDataId() {
+        return new ApiData<String>()
+                .setData("dataId: " + dataId);
     }
 
     private String getUsername() {
@@ -42,14 +44,16 @@ public class BaseController implements BaseApi {
     @Override
     @GetMapping("/r1")
     @PreAuthorize("hasAuthority('a1')")
-    public String r1() {
-        return getUsername() + " visit r1";
+    public ApiData<String> r1() {
+        return new ApiData<String>()
+                .setData(getUsername() + " visit r1");
     }
 
     @Override
     @GetMapping("/r2")
     @PreAuthorize("hasAuthority('a2')")
-    public String r2() {
-        return getUsername() + " visit r2";
+    public ApiData<String> r2() {
+        return new ApiData<String>()
+                .setData(getUsername() + " visit r2");
     }
 }
