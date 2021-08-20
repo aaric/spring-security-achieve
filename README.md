@@ -127,7 +127,7 @@ CREATE TABLE `oauth_client_details` (
 INSERT INTO `oauth_client_details`
 (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
 VALUES
-('client', 'test', '$2a$10$AAQ0cD25u0brKc0d3F7mpe8Yg1YODZaQHR9xHxeae.0Mf0NgISmlK', 'all', 'authorization_code,implicit,password,client_credentials,refresh_token', 'http://example.com', 43200, 86400, NULL);
+('client', 'base', '$2a$10$AAQ0cD25u0brKc0d3F7mpe8Yg1YODZaQHR9xHxeae.0Mf0NgISmlK', 'all', 'authorization_code,implicit,password,client_credentials,refresh_token', 'http://example.com', 43200, 86400, NULL);
 ```
 
 ### 3.2 Spring Boot For Gradle

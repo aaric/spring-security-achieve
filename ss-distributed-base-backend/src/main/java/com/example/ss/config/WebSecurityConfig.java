@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * Spring Security 配置
  *
  * @author Aaric, created on 2021-08-15T00:20.
- * @version 0.7.0-SNAPSHOT
+ * @version 0.8.0-SNAPSHOT
  */
 @Configuration
 @EnableWebSecurity

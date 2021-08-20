@@ -3,9 +3,9 @@ package com.example.ss.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * 令牌配置
@@ -17,17 +17,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class TokenConfig {
 
     @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
-
-    @Bean
-    JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("oauth2.0");
-        return jwtAccessTokenConverter;
-    }
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
     TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter);
+        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+        redisTokenStore.setPrefix("oauth2:");
+        return redisTokenStore;
     }
 }

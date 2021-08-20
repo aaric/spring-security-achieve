@@ -6,9 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+
 /**
  * 请求API数据
  *
+ * @param <T> 支持泛型
  * @author Aaric, created on 2021-08-20T14:30.
  * @version 0.8.0-SNAPSHOT
  */

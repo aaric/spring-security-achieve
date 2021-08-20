@@ -13,25 +13,13 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  * 资源服务器配置
  *
  * @author Aaric, created on 2021-08-14T23:35.
- * @version 0.7.0-SNAPSHOT
+ * @version 0.8.0-SNAPSHOT
  */
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    public static final String RESOURCE_ID = "res1";
-
-    /*@Autowired
-    private ResourceServerTokenServices tokenServices;
-
-    @Bean
-    ResourceServerTokenServices tokenServices() {
-        RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
-        remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:9100/oauth/check_token");
-        remoteTokenServices.setClientId("client");
-        remoteTokenServices.setClientSecret("secret");
-        return remoteTokenServices;
-    }*/
+    public static final String RESOURCE_ID = "base";
 
     @Autowired
     private TokenStore tokenStore;
@@ -39,7 +27,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(RESOURCE_ID)
-                /*.tokenServices(tokenServices)*/
                 .tokenStore(tokenStore)
                 .stateless(true);
     }

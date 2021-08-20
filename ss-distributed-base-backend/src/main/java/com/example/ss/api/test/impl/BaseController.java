@@ -27,6 +27,7 @@ public class BaseController implements BaseApi {
 
     @Override
     @GetMapping("/test/getDataId")
+    @PreAuthorize("hasAuthority('a3')")
     public ApiData<String> getDataId() {
         return new ApiData<String>()
                 .setData("dataId: " + dataId);
