@@ -3,9 +3,10 @@ package com.example.ss.auth.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.ss.auth.repository.BaseUserRepository;
 import com.example.ss.pojo.BaseUser;
+import com.example.ss.security.pojo.UserExtend;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,18 +38,19 @@ public class DbUserDetailsServiceImpl implements UserDetailsService {
         BaseUser loginUser = baseUserRepository.selectOne(queryWrapper);
         log.info("loginUser: {}", loginUser);
 
-        UserDetails userDetails = null;
         if (null != loginUser) {
             List<String> authorityList = baseUserRepository.selectAuthorityList(loginUser.getId());
             log.info("authorityList: {}", authorityList);
 
             String[] authorities = new String[authorityList.size()];
             authorityList.toArray(authorities);
-            userDetails = User.withUsername(loginUser.getUsername())
-                    .password(loginUser.getPasswd())
-                    .authorities(authorities)
-                    .build();
+
+            UserExtend userExtend = new UserExtend(loginUser.getId(),
+                    loginUser.getUsername(),
+                    loginUser.getPasswd(),
+                    AuthorityUtils.createAuthorityList(authorities));
+            return userExtend;
         }
-        return userDetails;
+        return null;
     }
 }

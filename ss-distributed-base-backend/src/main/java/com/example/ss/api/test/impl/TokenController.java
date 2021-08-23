@@ -68,10 +68,11 @@ public class TokenController implements TokenApi {
     @PostMapping("/current")
     public ApiData<String> current() throws ApiException {
         // 当前用户信息
+        Long userId = UserDetailsUtil.getUserId();
         String username = UserDetailsUtil.getUsername();
         log.info("current username: {}", username);
 
         return new ApiData<String>()
-                .setData(username);
+                .setData(String.format("%d -> %s", userId, username));
     }
 }
