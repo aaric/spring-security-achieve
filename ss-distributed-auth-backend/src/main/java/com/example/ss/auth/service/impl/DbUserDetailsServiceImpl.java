@@ -29,18 +29,18 @@ public class DbUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("origin username: {}", username);
+        log.debug("origin username: {}", username);
 
         QueryWrapper<BaseUser> queryWrapper = new QueryWrapper<BaseUser>();
         queryWrapper.lambda()
                 .eq(BaseUser::getUsername, username)
                 .eq(BaseUser::getIsDeleted, 0);
         BaseUser loginUser = baseUserRepository.selectOne(queryWrapper);
-        log.info("loginUser: {}", loginUser);
+        log.debug("loginUser: {}", loginUser);
 
         if (null != loginUser) {
             List<String> authorityList = baseUserRepository.selectAuthorityList(loginUser.getId());
-            log.info("authorityList: {}", authorityList);
+            log.debug("authorityList: {}", authorityList);
 
             String[] authorities = new String[authorityList.size()];
             authorityList.toArray(authorities);
