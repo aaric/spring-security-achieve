@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.example"
-    version = "0.11.0-SNAPSHOT"
+    version = "0.12.0-SNAPSHOT"
 
     ext {
         springCloudVersion = "Hoxton.SR9"
@@ -73,7 +73,7 @@ subprojects {
 
             dependency "mysql:mysql-connector-java:8.0.26"
             dependency "com.alibaba:druid-spring-boot-starter:1.1.24"
-            dependency "com.baomidou:mybatis-plus-boot-starter:3.4.3.1"
+            dependency "com.baomidou:mybatis-plus-boot-starter:3.4.3.2"
         }
     }
 
