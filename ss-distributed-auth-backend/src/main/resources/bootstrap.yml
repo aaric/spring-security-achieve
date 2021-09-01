@@ -75,10 +75,10 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         ext-config:
-          - data-id: ss-spring-datasource.yml
+          - data-id: ss-spring-datasource.yaml
             group: DEFAULT_GROUP
             refresh: true
-          - data-id: ss-spring-redis.yml
+          - data-id: ss-spring-redis.yaml
             group: DEFAULT_GROUP
             refresh: true
   datasource:
