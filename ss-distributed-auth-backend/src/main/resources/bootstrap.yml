@@ -76,10 +76,10 @@ spring:
         file-extension: yaml
         ext-config:
           - data-id: ss-spring-datasource.yaml
-            group: DEFAULT_GROUP
+            group: ${spring.cloud.nacos.config.group}
             refresh: true
           - data-id: ss-spring-redis.yaml
-            group: DEFAULT_GROUP
+            group: ${spring.cloud.nacos.config.group}
             refresh: true
   datasource:
     #url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:testdb}?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
