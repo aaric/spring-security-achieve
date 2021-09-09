@@ -147,3 +147,13 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-oauth2"
 }
 ```
+
+### 4 Nacos
+
+### 4.1 query data-id config
+
+> 配置中心可能会有缓存，可以把配置删掉，然后重新导入即可。
+
+```bash
+curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?namespace=public&group=DEFAULT_GROUP&dataId=ss-spring-datasource.yaml"
+```
