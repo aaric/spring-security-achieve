@@ -150,7 +150,13 @@ dependencies {
 
 ### 4 Nacos
 
-### 4.1 query data-id config
+### 4.1 query discovery list
+
+```bash
+curl -X GET "http://127.0.0.1:8848/nacos/v1/ns/instance/list?namespace=public&group=DEFAULT_GROUP&serviceName=ss-distributed-auth-backend"
+```
+
+### 4.2 query config content
 
 > 配置中心可能会有缓存，可以把配置删掉，然后重新导入即可。
 
