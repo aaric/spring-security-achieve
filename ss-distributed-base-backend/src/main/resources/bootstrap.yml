@@ -108,7 +108,7 @@ spring:
     #host: ${REDIS_HOST:127.0.0.1}
     #port: ${REDIS_PORT:6379}
     #password: ${REDIS_PASSWORD:redis2019}
-    database: ${REDIS_DATABASE:8}
+    database: ${REDIS_DATABASE:0}
 
 # MyBatis-Plus settings
 mybatis-plus:
