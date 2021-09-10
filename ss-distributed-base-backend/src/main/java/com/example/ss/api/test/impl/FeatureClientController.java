@@ -31,7 +31,7 @@ public class FeatureClientController implements FeatureClientApi {
 
     @Override
     @GetMapping("/httpTimeout")
-    //@HystrixCommand(fallbackMethod = "httpTimeoutFallback")
+//    @HystrixCommand(fallbackMethod = "httpTimeoutFallback")
     public ApiData<String> httpTimeout() {
         return featureApiFeign.timeout();
     }

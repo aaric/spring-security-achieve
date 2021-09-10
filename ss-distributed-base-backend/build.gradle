@@ -20,7 +20,7 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-    implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix"
+//    implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix"
 
     implementation "org.springframework.cloud:spring-cloud-starter-security"
     implementation "org.springframework.cloud:spring-cloud-starter-oauth2"
