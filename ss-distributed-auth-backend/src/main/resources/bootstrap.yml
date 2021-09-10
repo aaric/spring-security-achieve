@@ -66,17 +66,20 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.0.11.21:8848
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
       config:
-        server-addr: 10.0.11.21:8848
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
         file-extension: yaml
-        group: DEFAULT_GROUP
         ext-config:
-          - data-id: ss-spring-datasource.yml
-            group: DEFAULT_GROUP
+          - data-id: ss-spring-datasource.yaml
+            group: ${spring.cloud.nacos.config.group}
             refresh: true
-          - data-id: ss-spring-redis.yml
-            group: DEFAULT_GROUP
+          - data-id: ss-spring-redis.yaml
+            group: ${spring.cloud.nacos.config.group}
             refresh: true
   datasource:
     #url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:testdb}?useSSL=false&characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull
@@ -103,7 +106,7 @@ spring:
     #host: ${REDIS_HOST:127.0.0.1}
     #port: ${REDIS_PORT:6379}
     #password: ${REDIS_PASSWORD:redis2019}
-    database: ${REDIS_DATABASE:8}
+    database: ${REDIS_DATABASE:0}
 
 # MyBatis-Plus settings
 mybatis-plus:

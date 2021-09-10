@@ -25,6 +25,7 @@ public class AuthController implements AuthApi {
     @Override
     @GetMapping("/getDataId")
     public ApiData<String> getDataId() {
+        log.debug("dataId: {}", dataId);
         return new ApiData<String>()
                 .setData("dataId: " + dataId);
     }

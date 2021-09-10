@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RefreshScope
 @EnableFeignClients
 @EnableHystrix
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class BaseApp {
 
     /**

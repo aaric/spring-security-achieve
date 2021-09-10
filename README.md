@@ -5,7 +5,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![build](https://github.com/aaric/spring-security-achieve/workflows/build/badge.svg)](https://github.com/aaric/spring-security-achieve/actions)
-[![release](https://img.shields.io/badge/release-0.11.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
+[![release](https://img.shields.io/badge/release-0.12.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
 
 Spring Security Learning.
 
@@ -146,4 +146,20 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-security"
     implementation "org.springframework.cloud:spring-cloud-starter-oauth2"
 }
+```
+
+### 4 Nacos
+
+### 4.1 query discovery list
+
+```bash
+curl -X GET "http://127.0.0.1:8848/nacos/v1/ns/instance/list?namespace=public&group=DEFAULT_GROUP&serviceName=ss-distributed-auth-backend"
+```
+
+### 4.2 query config content
+
+> 配置中心可能会有缓存，可以把配置删掉，然后重新导入即可。
+
+```bash
+curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?namespace=public&group=DEFAULT_GROUP&dataId=ss-spring-datasource.yaml"
 ```
