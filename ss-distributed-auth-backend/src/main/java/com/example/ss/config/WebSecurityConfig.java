@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
                 // only test swagger work
-                .antMatchers("/v1/test/auth/getDataId").permitAll()
+                .antMatchers("/v1/test/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

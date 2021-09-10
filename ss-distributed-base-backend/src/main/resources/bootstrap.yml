@@ -123,3 +123,24 @@ mybatis-plus:
 # Base settings
 #base:
 #  data-id: ${spring.application.name}
+
+# Feign settings
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+# Hystrix settings
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000

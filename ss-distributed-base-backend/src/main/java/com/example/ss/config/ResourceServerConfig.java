@@ -36,7 +36,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
                 // test login token
-                .antMatchers("/v1/test/token/login", "/v1/test/token/valid", "/v1/test/token/refresh").permitAll()
+                .antMatchers("/v1/test/**").permitAll()
                 .antMatchers("/**").access("#oauth2.hasScope('all')")
                 .and()
                 .sessionManagement()
