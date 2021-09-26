@@ -50,4 +50,12 @@ public class TestController implements TestApi {
         return new ApiData<String>()
                 .setData(getUsername() + " visit r2");
     }
+
+    @Override
+    @GetMapping("/logstash")
+    public ApiData<String> logstash() {
+        log.info("hello logstash -> 简体中文");
+        return new ApiData<String>()
+                .setData("logstash");
+    }
 }

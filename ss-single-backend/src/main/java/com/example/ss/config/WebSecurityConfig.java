@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()*/
                 // Knife4j Swagger 允许访问资源
                 .antMatchers("/doc.html", "/webjars/**", "/swagger-resources", "/v2/api-docs").permitAll()
+                .antMatchers("/logstash").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "com.example"
-    version = "0.13.0-SNAPSHOT"
+    version = "0.14.0-SNAPSHOT"
 
     ext {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
@@ -75,6 +75,9 @@ subprojects {
             dependency "mysql:mysql-connector-java:8.0.26"
             dependency "com.alibaba:druid-spring-boot-starter:1.1.24"
             dependency "com.baomidou:mybatis-plus-boot-starter:3.4.3.2"
+
+            // https://github.com/logstash/logstash-logback-encoder#java-version-requirements
+            dependency "net.logstash.logback:logstash-logback-encoder:6.6"
         }
     }
 

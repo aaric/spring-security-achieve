@@ -5,7 +5,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![build](https://github.com/aaric/spring-security-achieve/workflows/build/badge.svg)](https://github.com/aaric/spring-security-achieve/actions)
-[![release](https://img.shields.io/badge/release-0.13.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
+[![release](https://img.shields.io/badge/release-0.14.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
 
 Spring Security Learning.
 
@@ -162,4 +162,46 @@ curl -X GET "http://127.0.0.1:8848/nacos/v1/ns/instance/list?namespace=public&gr
 
 ```bash
 curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?namespace=public&group=DEFAULT_GROUP&dataId=ss-spring-datasource.yaml"
+```
+
+## 5 LogStash
+
+### 5.1 build.gradle
+
+```groovy
+dependencies {
+    implementation "net.logstash.logback:logstash-logback-encoder"
+}
+```
+
+### 5.2 logback-spring.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <property name="APP_NAME" value="ss-single-backend"/>
+    <property name="LOG_FILE_PATH" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logs}"/>
+    <contextName>${APP_NAME}</contextName>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:4560</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+</configuration>
 ```

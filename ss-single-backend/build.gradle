@@ -16,4 +16,6 @@ dependencies {
     implementation "mysql:mysql-connector-java"
     implementation "com.alibaba:druid-spring-boot-starter"
     implementation "com.baomidou:mybatis-plus-boot-starter"
+
+    implementation "net.logstash.logback:logstash-logback-encoder"
 }

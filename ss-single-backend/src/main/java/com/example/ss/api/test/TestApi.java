@@ -21,4 +21,7 @@ public interface TestApi {
 
     @ApiOperation("R2")
     ApiData<String> r2();
+
+    @ApiOperation("LogStash")
+    ApiData<String> logstash();
 }
