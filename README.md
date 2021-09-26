@@ -205,3 +205,13 @@ dependencies {
     </root>
 </configuration>
 ```
+
+### 5.3 ES Not Health
+
+```bash
+curl -L -X PUT 'http://127.0.0.1:9200/springcloud-logstash-2021.09.26/_settings' \
+-H 'Content-Type: application/json' \
+-d '{
+    "number_of_replicas": 0
+}'
+```
