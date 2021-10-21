@@ -2,14 +2,24 @@ package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.BaseApi;
 import com.example.ss.data.ApiData;
+import com.example.ss.util.HttpServletUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 测试基础支撑模块API接口控制器
@@ -25,12 +35,8 @@ public class BaseController implements BaseApi {
     @Value("${base.data-id}")
     private String dataId;
 
-    @Override
-    @GetMapping("/test/getDataId")
-    public ApiData<String> getDataId() {
-        return new ApiData<String>()
-                .setData("dataId: " + dataId);
-    }
+    @Autowired
+    private TokenStore tokenStore;
 
     private String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -39,6 +45,45 @@ public class BaseController implements BaseApi {
             return userDetails.getUsername();
         }
         return null;
+    }
+
+    @Override
+    @GetMapping("/getDataId")
+    public ApiData<String> getDataId() {
+
+        return new ApiData<String>()
+                .setData("dataId: " + dataId);
+    }
+
+    @Override
+    @PutMapping("/updateGrantedAuthorities")
+    public ApiData<String> updateGrantedAuthorities(@RequestBody String[] newAuthorities) {
+        // 获取访问令牌
+        String accessToken = HttpServletUtils.getRequest().getHeader("Authorization").replaceFirst("Bearer ", "");
+        log.info("accessToken={}, newAuthorities={}", accessToken, newAuthorities);
+
+        // 获取当前权限列表
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("grantedAuthorities: {}", authentication.getAuthorities());
+
+        // 初始化权限列表
+        List<GrantedAuthority> newGrantedAuthorities = AuthorityUtils.createAuthorityList(newAuthorities);
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), newGrantedAuthorities);
+
+        // 更新RAM
+        /*SecurityContextHolder.getContext().setAuthentication(newAuthentication);*/
+
+        // 重构用户认证信息
+        OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
+        OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
+        OAuth2Request auth2Request = oAuth2Authentication.getOAuth2Request();
+        OAuth2Authentication newOAuth2Authentication = new OAuth2Authentication(auth2Request, newAuthentication);
+
+        // 更新Redis
+        tokenStore.storeAccessToken(oAuth2AccessToken, newOAuth2Authentication);
+
+        return new ApiData<String>()
+                .setData(getUsername() + " authorities updated");
     }
 
     @Override
