@@ -21,4 +21,7 @@ public interface BaseApi {
 
     @ApiOperation("R2")
     ApiData<String> r2();
+
+    @ApiOperation("R3")
+    ApiData<String> r3();
 }

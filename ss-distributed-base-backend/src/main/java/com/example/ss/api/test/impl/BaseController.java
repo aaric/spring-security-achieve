@@ -27,7 +27,6 @@ public class BaseController implements BaseApi {
 
     @Override
     @GetMapping("/test/getDataId")
-    @PreAuthorize("hasAuthority('a3')")
     public ApiData<String> getDataId() {
         return new ApiData<String>()
                 .setData("dataId: " + dataId);
@@ -56,5 +55,13 @@ public class BaseController implements BaseApi {
     public ApiData<String> r2() {
         return new ApiData<String>()
                 .setData(getUsername() + " visit r2");
+    }
+
+    @Override
+    @GetMapping("/r3")
+    @PreAuthorize("hasAuthority('a3')")
+    public ApiData<String> r3() {
+        return new ApiData<String>()
+                .setData(getUsername() + " visit r3");
     }
 }
