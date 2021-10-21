@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -50,7 +51,8 @@ public class BaseController implements BaseApi {
     @Override
     @GetMapping("/getDataId")
     public ApiData<String> getDataId() {
-
+        Collection<OAuth2AccessToken> oAuth2AccessTokens = tokenStore.findTokensByClientIdAndUserName("client", "admin");
+        oAuth2AccessTokens.forEach(token -> log.info("{}", token.getValue()));
         return new ApiData<String>()
                 .setData("dataId: " + dataId);
     }
