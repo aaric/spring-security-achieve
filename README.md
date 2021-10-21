@@ -40,6 +40,11 @@ CREATE TABLE base_user(
     PRIMARY KEY (id) USING BTREE
 ) COMMENT = '用户表 测试';
 
+-- user test records
+INSERT INTO `base_user` (`id`, `username`, `passwd`, `passwd_salt`) VALUES 
+(1, 'admin', '$2a$10$S.Vtr6IcAsYDyf2v.ZPg0OTwdhY5yeCc.IyVWNBQ8QQKm/75QB5/y', '$2a$10$S.Vtr6IcAsYDyf2v.ZPg0O'),
+(2, 'test',  '$2a$10$8fpU9nurteA4QHxOBlPoVOKAyyoFlBSDnTn5mhpg2ZNFZq8eziH/C', '$2a$10$8fpU9nurteA4QHxOBlPoVO');
+
 -- role table
 CREATE TABLE base_role(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
@@ -54,6 +59,11 @@ CREATE TABLE base_role(
     PRIMARY KEY (id) USING BTREE
 ) COMMENT = '角色表 测试';
 
+-- role test records
+INSERT INTO `base_role` (`id`, `code`, `name`, `remark`) VALUES 
+(1, 'ROLE_admin', '超级管理员', '测试管理员角色'),
+(2, 'ROLE_test',  '超级管理员', '测试普通角色');
+
 -- user-role ref table
 CREATE TABLE base_user_role(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
@@ -66,6 +76,11 @@ CREATE TABLE base_user_role(
     FOREIGN KEY (`user_id`) REFERENCES `base_user` (`id`) ,
     FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`)
 ) COMMENT = '用户角色表 测试';
+
+-- user-role test records
+INSERT INTO `base_user_role` (`id`, `user_id`, `role_id`) VALUES 
+(1, 1, 1),
+(2, 2, 2);
 
 -- authority table
 CREATE TABLE base_authority(
@@ -83,6 +98,11 @@ CREATE TABLE base_authority(
     PRIMARY KEY (id) USING BTREE
 ) COMMENT = '权限表 测试';
 
+-- authority test records
+INSERT INTO `base_authority` (`id`, `code`, `name`, `http_method`, `http_url`, `remark`) VALUES 
+(1, 'a1', '权限01', 'GET', '/api/base/v1/test/order/r1', '测试角色'),
+(2, 'a2', '权限02', 'GET', '/api/base/v1/test/order/r2', '测试角色');
+
 -- role-authority ref table
 CREATE TABLE base_role_authority(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
@@ -95,6 +115,12 @@ CREATE TABLE base_role_authority(
     FOREIGN KEY (`role_id`) REFERENCES `base_role` (`id`) ,
     FOREIGN KEY (`authority_id`) REFERENCES `base_authority` (`id`)
 ) COMMENT = '角色权限表 测试';
+
+-- role-authority test records
+INSERT INTO `base_role_authority` (`id`, `role_id`, `authority_id`) VALUES 
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 1);
 ```
 
 ## 3 Spring Security + OAuth2
