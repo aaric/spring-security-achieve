@@ -5,7 +5,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![build](https://github.com/aaric/spring-security-achieve/workflows/build/badge.svg)](https://github.com/aaric/spring-security-achieve/actions)
-[![release](https://img.shields.io/badge/release-0.14.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
+[![release](https://img.shields.io/badge/release-0.15.0-blue.svg)](https://github.com/aaric/spring-security-achieve/releases)
 
 Spring Security Learning.
 
@@ -87,7 +87,7 @@ CREATE TABLE base_authority(
 CREATE TABLE base_role_authority(
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT 'ID' ,
     role_id BIGINT NOT NULL   COMMENT '角色ID' ,
-    authority_id INT NOT NULL   COMMENT '权限ID' ,
+    authority_id BIGINT NOT NULL   COMMENT '权限ID' ,
     is_deleted INT NOT NULL  DEFAULT 0 COMMENT '是否删除：0-否，1-是' ,
     created_by BIGINT    COMMENT '创建人' ,
     created_at DATETIME    COMMENT '创建时间' ,
