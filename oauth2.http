@@ -5,8 +5,8 @@
 @code = chYRzz
 @username = admin
 @password = admin
-@access_token = 95b70bc1-862e-42e9-89e8-2271f653ba09
-@refresh_token = 2c23cd31-247f-43b2-b2e4-b1dc34e654de
+@access_token = 615724a6-bb66-4ff4-ba01-71b188d2f00e
+@refresh_token = e0957599-fbd6-4a8e-a5f2-fb76b4c84ffd
 
 ### authorization_code: /oauth/authorize
 

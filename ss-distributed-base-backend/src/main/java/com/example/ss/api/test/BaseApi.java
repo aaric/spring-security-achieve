@@ -18,7 +18,8 @@ public interface BaseApi {
     ApiData<String> getDataId();
 
     @ApiOperation("更新当前Authorities")
-    ApiData<String> updateGrantedAuthorities(@ApiParam("新权限列表") String[] newAuthorities);
+    ApiData<String> updateGrantedAuthorities(@ApiParam(value = "新用户ID", example = "2") Long newUserId,
+                                             @ApiParam("新权限列表") String[] newAuthorities);
 
     @ApiOperation("R1")
     ApiData<String> r1();

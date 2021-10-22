@@ -2,6 +2,7 @@ package com.example.ss.api.test.impl;
 
 import com.example.ss.api.test.BaseApi;
 import com.example.ss.data.ApiData;
+import com.example.ss.security.pojo.UserExtend;
 import com.example.ss.util.HttpServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
@@ -41,9 +41,9 @@ public class BaseController implements BaseApi {
 
     private String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            return userDetails.getUsername();
+        if (principal instanceof UserExtend) {
+            UserExtend userExtend = (UserExtend) principal;
+            return userExtend.getUsername();
         }
         return null;
     }
@@ -59,30 +59,41 @@ public class BaseController implements BaseApi {
 
     @Override
     @PutMapping("/updateGrantedAuthorities")
-    public ApiData<String> updateGrantedAuthorities(@RequestBody String[] newAuthorities) {
+    public ApiData<String> updateGrantedAuthorities(@RequestParam Long newUserId, @RequestBody String[] newAuthorities) {
         // 获取访问令牌
         String accessToken = HttpServletUtils.getRequest().getHeader("Authorization").replaceFirst("Bearer ", "");
         log.info("accessToken={}, newAuthorities={}", accessToken, newAuthorities);
 
-        // 获取当前权限列表
+        // 获取权限列表
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("grantedAuthorities: {}", authentication.getAuthorities());
 
-        // 初始化权限列表
-        List<GrantedAuthority> newGrantedAuthorities = AuthorityUtils.createAuthorityList(newAuthorities);
-        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), newGrantedAuthorities);
+        // 更新用户信息与权限列表
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserExtend) {
+            // 获取用户ID
+            UserExtend userExtend = (UserExtend) principal;
+            log.info("userId: {}", userExtend.getId());
 
-        // 更新RAM
-        /*SecurityContextHolder.getContext().setAuthentication(newAuthentication);*/
+            // 设置用户ID
+            userExtend.setId(newUserId);
 
-        // 重构用户认证信息
-        OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
-        OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
-        OAuth2Request auth2Request = oAuth2Authentication.getOAuth2Request();
-        OAuth2Authentication newOAuth2Authentication = new OAuth2Authentication(auth2Request, newAuthentication);
+            // 初始化权限列表
+            List<GrantedAuthority> newGrantedAuthorities = AuthorityUtils.createAuthorityList(newAuthorities);
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userExtend, authentication.getCredentials(), newGrantedAuthorities);
 
-        // 更新Redis
-        tokenStore.storeAccessToken(oAuth2AccessToken, newOAuth2Authentication);
+            // 更新RAM（非必要）
+            /*SecurityContextHolder.getContext().setAuthentication(newAuthentication);*/
+
+            // 设置用户认证信息
+            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
+            OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
+            OAuth2Request auth2Request = oAuth2Authentication.getOAuth2Request();
+            OAuth2Authentication newOAuth2Authentication = new OAuth2Authentication(auth2Request, newAuthentication);
+
+            // 更新Redis
+            tokenStore.storeAccessToken(oAuth2AccessToken, newOAuth2Authentication);
+        }
 
         return new ApiData<String>()
                 .setData(getUsername() + " authorities updated");
