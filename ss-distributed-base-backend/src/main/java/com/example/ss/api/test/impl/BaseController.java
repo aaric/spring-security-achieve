@@ -64,7 +64,7 @@ public class BaseController implements BaseApi {
         String accessToken = HttpServletUtils.getRequest().getHeader("Authorization").replaceFirst("Bearer ", "");
         log.info("accessToken={}, newAuthorities={}", accessToken, newAuthorities);
 
-        // 获取权限列表
+        // 获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("grantedAuthorities: {}", authentication.getAuthorities());
 
